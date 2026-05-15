@@ -8,11 +8,11 @@ load_dotenv()
 Entrez.email = os.getenv("EMAIL_ADDRESS")
 
 # Date from a month ago 
-last_week = datetime.now() - timedelta(days=30)
-date_last_week = last_week.strftime('%Y/%m/%d')
+one_month_ago = datetime.now() - timedelta(days=30)
+date_month_ago = one_month_ago.strftime('%Y/%m/%d')
 
 # Downloading PubMed papers
-query = date_last_week + "[Date - Publication] : 3000[Date - Publication]"
+query = date_month_ago + "[Date - Publication] : 3000[Date - Publication]"
 stream = Entrez.esearch(db = "pubmed", term = query, retmax = 2000, sort = "relevance")
 record = Entrez.read(stream)
 stream.close()
