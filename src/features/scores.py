@@ -1,4 +1,4 @@
-from preprocessor import fetch_papers
+from src.features.preprocessor import fetch_papers
 from impact_factor.core import Factor
 from datetime import date, datetime
 import numpy as np
