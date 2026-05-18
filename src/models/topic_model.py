@@ -12,24 +12,76 @@ random.seed(42)
 np.random.seed(42)
 
 papers = filtered_papers()
-mesh_tags = []
 abstracts = []
 
 for paper in papers:
-    mesh_tags.append(paper["mesh_tags"])
     abstracts.append(paper["abstract"])
 
-mesh_tags = [t for tags in mesh_tags for t in tags]
-best_mesh_tags = []
-c = Counter(mesh_tags)
+specific_tags = [
+    # biomedical
+    "Neoplasms",
+    "Cardiovascular Diseases",
+    "Nervous System Diseases",
+    "Infectious Disease",
+    "Metabolic Diseases",
+    "Pulmonary Disease",
+    "Inflammatory Disease",
+    "Genetic Disorders",
+    "Immunology",
+    "Pharmacology",
+    "Neuroscience",
+    "Neuropharmacology",
+    "Ophthalmology",
+    "Psychiatry",
+    "Drug Resistance",
+    "Vaccines",
+    "Surgery",
+    "Epidemiology",
+    "Preventive Medicine",
+    "Traditional Medicine",
 
-for tag, count in c.most_common(40):
-    best_mesh_tags.append(tag)
+    # biology
+    "Genomics",
+    "Cell Biology",
+    "Microbiology",
+    "Plant Biology",
+    "Plant Microbiology",
+    "Ecology",
+    "Evolutionary Biology",
+    "Biochemistry",
+    "Aging",
+    "Food Science",
+
+    # chemistry & materials
+    "Organic Chemistry",
+    "Materials Science",
+    "Nanotechnology",
+    "Spectroscopy",
+    "Construction Materials",
+
+    # environmental
+    "Climate Change",
+    "Environmental Pollution",
+    "Marine Biology",
+    "Soil Science",
+
+    # physics & engineering
+    "Quantum Mechanics",
+    "Biomaterials",
+    "Biomedical Engineering",
+    "Energy Storage",
+    "Superconductivity",
+
+    # computational
+    "Machine Learning",
+    "Bioinformatics",
+    "Computer Vision",
+]
 
 representation_model = ZeroShotClassification(
-    best_mesh_tags, 
+    specific_tags, 
     model = "facebook/bart-large-mnli",
-    min_prob = 0.3
+    min_prob = 0.1
 )
 
 umap_model = UMAP(
@@ -57,6 +109,11 @@ topic_model = BERTopic(
     calculate_probabilities=False
 )
 topics, prob = topic_model.fit_transform(abstracts)
+topic_info = topic_model.get_topic_info()
 
-print(topic_model.get_topic_info())
-print(topic_model.get_topic_info()["Name"].tolist())
+for _, row in topic_info.iterrows():
+    if row["Topic"] == -1:
+        continue
+    print(f"Topic {row['Topic']}: {row['Name']} | Count: {row['Count']}")
+    print(f"  Sample: {row['Representative_Docs'][0][:100]}")
+    print()
