@@ -31,63 +31,45 @@ specific_tags = [
     "Neuroscience",
     "Molecular Biology",
     "Cell Biology",
-    "Oncology",
     "Ophthalmology",
     "Psychiatry",
     "Drug Resistance",
     "Vaccines",
-    "Surgery",
     "Epidemiology",
-    "Preventive Medicine",
     "Traditional Medicine",
-    "Analytical Chemistry",
-    "Ophthalmology",
-    "Psychiatry",
-    "Traditional Medicine",
+    "Structural Biology",
 
     # biology
     "Genomics",
-    "Taxonomy",
     "Microbiology",
     "Plant Biology",
     "Ecology",
-    "Evolutionary Biology",
     "Biochemistry",
     "Aging",
     "Food Science",
-    "Muscle Biology",
-    "Structural Biology",
-    "Plant Reproductive Biology",
 
-    # chemistry & materials
+    # chemistry
     "Organic Chemistry",
     "Materials Science",
-    "Nanotechnology",
-    "Spectroscopy",
     "Catalysis",
-    "Construction Materials",
+    "Electrochemistry",
+    "Spectroscopy",
 
     # environmental
     "Climate Change",
     "Environmental Pollution",
-    "Marine Biology",
-    "Soil Science",
 
     # physics & engineering
     "Quantum Mechanics",
     "Astrophysics",
     "Biomaterials",
-    "Biomedical Engineering",
     "Energy Storage",
     "Superconductivity",
-    "Control Systems"
 
     # computational
     "Machine Learning",
     "Bioinformatics",
-    "Computer Vision",
-    "Statistics",
-    "Computer Science"
+    "Computer Science",
 ]
 
 representation_model = ZeroShotClassification(
@@ -121,10 +103,3 @@ topic_model = BERTopic(
 )
 topics, prob = topic_model.fit_transform(abstracts)
 topic_info = topic_model.get_topic_info()
-
-for _, row in topic_info.iterrows():
-    if row["Topic"] == -1:
-        continue
-    print(f"Topic {row['Topic']}: {row['Name']} | Count: {row['Count']}")
-    print(f"  Sample: {row['Representative_Docs'][0][:100]}")
-    print()
