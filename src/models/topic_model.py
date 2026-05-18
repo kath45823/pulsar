@@ -4,6 +4,12 @@ from bertopic import BERTopic
 from umap import UMAP
 from hdbscan import HDBSCAN
 from sklearn.feature_extraction.text import CountVectorizer
+from collections import Counter
+import random 
+import numpy as np
+
+random.seed(42)
+np.random.seed(42)
 
 papers = filtered_papers()
 mesh_tags = []
@@ -14,7 +20,17 @@ for paper in papers:
     abstracts.append(paper["abstract"])
 
 mesh_tags = [t for tags in mesh_tags for t in tags]
-representation_model = ZeroShotClassification(mesh_tags, model="facebook/bart-large-mnli")
+best_mesh_tags = []
+c = Counter(mesh_tags)
+
+for tag, count in c.most_common(40):
+    best_mesh_tags.append(tag)
+
+representation_model = ZeroShotClassification(
+    best_mesh_tags, 
+    model = "facebook/bart-large-mnli",
+    min_prob = 0.3
+)
 
 umap_model = UMAP(
     n_neighbors=15,
