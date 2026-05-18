@@ -102,4 +102,6 @@ topic_model = BERTopic(
     calculate_probabilities=False
 )
 topics, prob = topic_model.fit_transform(abstracts)
-topic_info = topic_model.get_topic_info()
+
+embedding_model = "sentence-transformers/all-MiniLM-L6-v2"
+topic_model.save("src/models/topic_model", serialization="safetensors", save_ctfidf=True, save_embedding_model=embedding_model)
