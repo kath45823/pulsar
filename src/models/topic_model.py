@@ -21,7 +21,9 @@ specific_tags = [
     # biomedical
     "Neoplasms",
     "Cardiovascular Diseases",
+    "Cardiology",
     "Nervous System Diseases",
+    "Neurology",
     "Infectious Disease",
     "Metabolic Diseases",
     "Pulmonary Disease",
@@ -30,7 +32,9 @@ specific_tags = [
     "Immunology",
     "Pharmacology",
     "Neuroscience",
-    "Neuropharmacology",
+    "Molecular Biology",
+    "Cell Biology",
+    "Oncology",
     "Ophthalmology",
     "Psychiatry",
     "Drug Resistance",
@@ -39,24 +43,31 @@ specific_tags = [
     "Epidemiology",
     "Preventive Medicine",
     "Traditional Medicine",
+    "Analytical Chemistry",
+    "Ophthalmology",
+    "Psychiatry",
+    "Traditional Medicine",
 
     # biology
     "Genomics",
-    "Cell Biology",
+    "Taxonomy",
     "Microbiology",
     "Plant Biology",
-    "Plant Microbiology",
     "Ecology",
     "Evolutionary Biology",
     "Biochemistry",
     "Aging",
     "Food Science",
+    "Muscle Biology",
+    "Structural Biology",
+    "Plant Reproductive Biology",
 
     # chemistry & materials
     "Organic Chemistry",
     "Materials Science",
     "Nanotechnology",
     "Spectroscopy",
+    "Catalysis",
     "Construction Materials",
 
     # environmental
@@ -67,15 +78,19 @@ specific_tags = [
 
     # physics & engineering
     "Quantum Mechanics",
+    "Astrophysics",
     "Biomaterials",
     "Biomedical Engineering",
     "Energy Storage",
     "Superconductivity",
+    "Control Systems"
 
     # computational
     "Machine Learning",
     "Bioinformatics",
     "Computer Vision",
+    "Statistics",
+    "Computer Science"
 ]
 
 representation_model = ZeroShotClassification(
