@@ -39,6 +39,7 @@ def filtered_papers():
         
         pub_date = date(int(p_date["Year"]), month_num, day)
         days_since_pub = (datetime.now().date() - pub_date).days
+        days_since_pub = max(days_since_pub, 0)
 
         score = 0.7 * jif + 0.3 * (1 / (days_since_pub + 1)) 
         paper["score"] = score
