@@ -8,9 +8,6 @@ from collections import Counter
 import random 
 import numpy as np
 
-random.seed(42)
-np.random.seed(42)
-
 papers = filtered_papers()
 abstracts = []
 
@@ -104,7 +101,6 @@ umap_model = UMAP(
     n_components=5,
     min_dist=0.0,
     metric="cosine",
-    random_state=42  
 )
 
 hdbscan_model = HDBSCAN(
