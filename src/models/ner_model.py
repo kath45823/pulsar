@@ -1,6 +1,7 @@
 from transformers import pipeline
 import re
 from src.models.topic_model import get_papers_per_topic
+from collections import Counter
 
 diseases_ner = pipeline("ner", model="OpenMed/OpenMed-NER-DiseaseDetect-BioMed-335M", aggregation_strategy = "simple")
 cell_ner = pipeline("ner", model="siddharthtumre/biobert-finetuned-ner", aggregation_strategy = "simple")
@@ -16,7 +17,7 @@ def clean(word):
 
     return word.strip()
 
-def abstract_ner(abstract):
+def run_ner_on_abstract(abstract):
     entities = {
         "chemicals": [],
         "diseases": [],
@@ -51,3 +52,40 @@ def abstract_ner(abstract):
 
 def topic_ner():
     topic_papers = get_papers_per_topic()
+    topic_ner_tags = {}
+
+    for topic, papers in topic_papers.items():
+        all_ner_tags = {
+            "chemicals": [],
+            "diseases": [],
+            "genes/proteins": [],
+            "cell_types": [],
+            "cell_lines": []
+        }
+        for paper in papers: 
+            paper_tags = run_ner_on_abstract(paper["abstract"])
+            all_ner_tags["chemicals"].extend(paper_tags["chemicals"])
+            all_ner_tags["diseases"].extend(paper_tags["diseases"])
+            all_ner_tags["genes/proteins"].extend(paper_tags["genes/proteins"])
+            all_ner_tags["cell_types"].extend(paper_tags["cell_types"])
+            all_ner_tags["cell_lines"].extend(paper_tags["cell_lines"])
+        
+        chem_counter = Counter(all_ner_tags["chemicals"])
+        diseases_counter = Counter(all_ner_tags["diseases"])
+        genes_counter = Counter(all_ner_tags["genes/proteins"])
+        types_counter = Counter(all_ner_tags["cell_types"])
+        lines_counter = Counter(all_ner_tags["cell_lines"])
+
+        topic_tags = {
+            "chemicals": [tag for tag, count in chem_counter.most_common(5)],
+            "diseases": [tag for tag, count in diseases_counter.most_common(5)],
+            "genes/proteins": [tag for tag, count in genes_counter.most_common(5)],
+            "cell_types": [tag for tag, count in types_counter.most_common(5)],
+            "cell_lines": [tag for tag, count in lines_counter.most_common(5)]
+        }
+
+        topic_ner_tags[topic] = topic_tags
+
+    return topic_ner_tags
+
+print(topic_ner())
