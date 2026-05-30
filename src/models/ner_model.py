@@ -1,23 +1,11 @@
 from transformers import pipeline
 import re
+from src.models.topic_model import get_papers_per_topic
 
 diseases_ner = pipeline("ner", model="OpenMed/OpenMed-NER-DiseaseDetect-BioMed-335M", aggregation_strategy = "simple")
 cell_ner = pipeline("ner", model="siddharthtumre/biobert-finetuned-ner", aggregation_strategy = "simple")
 chem_ner = pipeline("ner", model="OpenMed/OpenMed-NER-ChemicalDetect-PubMed-335M", aggregation_strategy = "first")
 gene_ner = pipeline("ner", model="pruas/BENT-PubMedBERT-NER-Gene", aggregation_strategy = "first")
-
-test_abstract = """
-Alzheimer's disease (AD) is characterized by progressive neurodegeneration driven by 
-amyloid-beta plaques and tau protein hyperphosphorylation. We investigated the 
-therapeutic potential of donepezil and memantine combination therapy in APP/PS1 
-transgenic mice. RNA sequencing of hippocampal neurons revealed significant 
-upregulation of APOE and TREM2 gene expression, while BACE1 mRNA levels were 
-markedly reduced following treatment. Immunohistochemical analysis of HT22 and 
-SH-SY5Y cell lines demonstrated decreased amyloid precursor protein (APP) levels 
-in microglia and astrocytes. Our findings suggest that combination therapy 
-significantly reduces tau phosphorylation and neuroinflammation in patients with 
-mild cognitive impairment (MCI).
-"""
 
 def clean(word):
     word = re.sub(r'\s*-\s*', '-', word)
@@ -61,5 +49,5 @@ def abstract_ner(abstract):
     
     return entities
 
-
-print(abstract_ner(test_abstract))
+def topic_ner():
+    topic_papers = get_papers_per_topic()
