@@ -118,7 +118,10 @@ def get_papers_per_topic():
             if topic_id == tid:
                 papers_per_topic.append(paper)
 
-        topic_papers[title] = papers_per_topic
+        topic_papers[title] = {
+            "papers": papers_per_topic,
+            "representative_docs": row["Representative_Docs"]
+        }
 
     embedding_model = "sentence-transformers/all-MiniLM-L6-v2"
     topic_model.save("src/models/topic_model", serialization="safetensors", save_ctfidf=True, save_embedding_model=embedding_model)

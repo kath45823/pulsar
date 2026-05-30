@@ -69,13 +69,13 @@ def run_ner_on_abstract(abstract, diseases_ner, cell_ner, chem_ner, gene_ner, di
     
     return entities
 
-def topic_ner():
+def run_ner_on_topics():
     diseases_ner, cell_ner, chem_ner, gene_ner, disease_tokenizer, cell_tokenizer, chem_tokenizer, gene_tokenizer = init()
 
     topic_papers = get_papers_per_topic()
     topic_ner_tags = {}
 
-    for topic, papers in topic_papers.items():
+    for topic, topic_data in topic_papers.items():
         all_ner_tags = {
             "chemicals": [],
             "diseases": [],
@@ -83,6 +83,10 @@ def topic_ner():
             "cell_types": [],
             "cell_lines": []
         }
+
+        papers = topic_data["papers"]
+        rep_docs = topic_data["representative_docs"]
+
         for paper in papers: 
             paper_tags = run_ner_on_abstract(paper["abstract"], diseases_ner, cell_ner, chem_ner, gene_ner, disease_tokenizer, cell_tokenizer, chem_tokenizer, gene_tokenizer)
             all_ner_tags["chemicals"].extend(paper_tags["chemicals"])
@@ -105,8 +109,10 @@ def topic_ner():
             "cell_lines": [tag for tag, count in lines_counter.most_common(5)]
         }
 
-        topic_ner_tags[topic] = topic_tags
+        topic_ner_tags[topic] = {
+            "paper_count": len(papers),
+            "representative_abstracts": rep_docs,
+            "tags": topic_tags
+        }
 
     return topic_ner_tags
-
-print(topic_ner())
