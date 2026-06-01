@@ -34,8 +34,12 @@ def summarize_all_topics():
 
     topic_papers_tags = run_ner_on_topics()
     topic_summaries = {}
+    count = 0 
 
     for topic, topic_item in topic_papers_tags.items():
+        if count >= 2: 
+            break
+        
         rep_abstracts = "\n\n".join(topic_item["representative_abstracts"])
         title = clean_title(topic, rep_abstracts, client)
         count = topic_item["paper_count"]
@@ -69,10 +73,11 @@ def summarize_all_topics():
         )
 
         topic_summaries[title] = {
+            "count": count,
             "tags": topic_item["tags"],
             "summary": response.text
         }
 
-    return topic_summaries
+        count +=1
 
-print(summarize_all_topics())
+    return topic_summaries
