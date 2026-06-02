@@ -1,6 +1,5 @@
 from transformers import pipeline
 import re
-from src.models.topic_model import get_papers_per_topic
 from collections import Counter
 from transformers import AutoTokenizer
 
@@ -69,10 +68,8 @@ def run_ner_on_abstract(abstract, diseases_ner, cell_ner, chem_ner, gene_ner, di
     
     return entities
 
-def run_ner_on_topics():
+def run_ner_on_topics(topic_papers):
     diseases_ner, cell_ner, chem_ner, gene_ner, disease_tokenizer, cell_tokenizer, chem_tokenizer, gene_tokenizer = init()
-
-    topic_papers = get_papers_per_topic()
     topic_ner_tags = {}
 
     for topic, topic_data in topic_papers.items():

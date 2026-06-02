@@ -1,4 +1,3 @@
-from src.models.ner_model import run_ner_on_topics
 from google import genai
 from dotenv import load_dotenv
 import os
@@ -28,11 +27,10 @@ def clean_title(title, rep_abstracts, client):
     else: 
         return title.split("___")[0].split("_", 1)[1]
 
-def summarize_all_topics():
+def summarize_all_topics(topic_papers_tags):
     load_dotenv()
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-    topic_papers_tags = run_ner_on_topics()
     topic_summaries = {}
     count = 0 
 
@@ -42,7 +40,7 @@ def summarize_all_topics():
         
         rep_abstracts = "\n\n".join(topic_item["representative_abstracts"])
         title = clean_title(topic, rep_abstracts, client)
-        count = topic_item["paper_count"]
+        paper_count = topic_item["paper_count"]
         chem = topic_item["tags"]["chemicals"]
         diseases = topic_item["tags"]["diseases"]
         genes = topic_item["tags"]["genes/proteins"]
@@ -73,7 +71,7 @@ def summarize_all_topics():
         )
 
         topic_summaries[title] = {
-            "count": count,
+            "count": paper_count,
             "tags": topic_item["tags"],
             "summary": response.text
         }

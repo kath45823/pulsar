@@ -1,4 +1,3 @@
-from src.summarization.llm_summarization import summarize_all_topics
 import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
@@ -63,9 +62,8 @@ def generate_html(topic_summaries):
 
     return html
 
-def send_email():
+def send_email(topic_summaries):
     load_dotenv()
-    topic_summaries = summarize_all_topics()
 
     sender_email = os.getenv("EMAIL_ADDRESS")
     receiver_email = os.getenv("EMAIL_ADDRESS")
@@ -88,5 +86,3 @@ def send_email():
         print("Email sent successfully!")
     except Exception as e: 
         print(f"Failed to send email: {e}")
-
-send_email()
