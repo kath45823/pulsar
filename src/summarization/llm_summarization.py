@@ -62,7 +62,8 @@ def summarize_all_topics(topic_papers_tags):
             {rep_abstracts}
 
             Write a 3-4 sentence summary of what research is saying about 
-            this topic this week. Be specific, reference key entities
+            this topic this week. Be specific, reference key entities.
+            Use plain text only — no LaTeX, no markdown, no special formatting.
         """
         
         response = client.models.generate_content(

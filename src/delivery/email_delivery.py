@@ -10,14 +10,14 @@ def generate_html(topic_summaries):
     <head>
         <style>
             body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; }
-            h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
-            .topic { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+            h1 { color: #2c3e50; border-bottom: 3px solid #206796; padding-bottom: 10px; }
+            .topic { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 15px;}
             .topic h2 { color: #2c3e50; margin-top: 0; }
             .paper-count { color: #7f8c8d; font-size: 14px; margin-bottom: 10px; }
-            .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
-            .tag-group { background-color: #f0f4f8; border-radius: 6px; padding: 8px 12px; font-size: 13px; }
-            .tag-group strong { color: #2980b9; }
-            .summary { color: #34495e; line-height: 1.6; border-left: 4px solid #3498db; padding-left: 12px; }
+            .tags { display: flex; flex-wrap: wrap; margin-bottom: 15px; }
+            .tag-group { background-color: #f0f4f8; border-radius: 6px; padding: 8px 12px; font-size: 13px; margin: 0 8px 8px 0;}
+            .tag-group strong { color: #206796; }
+            .summary { color: #34495e; line-height: 1.6; border-left: 4px solid #206796; padding-left: 12px; }
             .footer { text-align: center; color: #95a5a6; font-size: 12px; margin-top: 30px; }
         </style>
     </head>
@@ -70,7 +70,7 @@ def send_email(topic_summaries):
     password = os.getenv("APP_PASSWORD")
 
     msg = EmailMessage()
-    msg["Subject"] = "Weekly Digest of PubMed"
+    msg["Subject"] = "Weekly PubMed Digest"
     msg["From"] = sender_email
     msg["To"] = receiver_email 
 

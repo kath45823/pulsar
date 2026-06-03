@@ -64,7 +64,7 @@ def run_ner_on_abstract(abstract, diseases_ner, cell_ner, chem_ner, gene_ner, di
             entities["genes/proteins"].append(clean(entity["word"]))
 
     for e_type in entities:
-        entities[e_type] = list(set(e for e in entities[e_type] if e and len(e) > 1))
+        entities[e_type] = list(set(e for e in entities[e_type] if e and len(e) > 2))
     
     return entities
 
