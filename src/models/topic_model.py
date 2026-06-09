@@ -4,9 +4,6 @@ from bertopic import BERTopic
 from umap import UMAP
 from hdbscan import HDBSCAN
 from sklearn.feature_extraction.text import CountVectorizer
-from collections import Counter
-import random 
-import numpy as np
 
 def get_papers_per_topic():
     papers = filtered_papers()
@@ -80,7 +77,7 @@ def get_papers_per_topic():
     )
 
     umap_model = UMAP(
-        n_neighbors=15,
+        n_neighbors=10,
         n_components=5,
         min_dist=0.0,
         metric="cosine",

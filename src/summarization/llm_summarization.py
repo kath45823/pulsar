@@ -32,12 +32,8 @@ def summarize_all_topics(topic_papers_tags):
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
     topic_summaries = {}
-    count = 0 
 
     for topic, topic_item in topic_papers_tags.items():
-        if count >= 2: 
-            break
-        
         rep_abstracts = "\n\n".join(topic_item["representative_abstracts"])
         title = clean_title(topic, rep_abstracts, client)
         paper_count = topic_item["paper_count"]
@@ -49,7 +45,7 @@ def summarize_all_topics(topic_papers_tags):
 
         prompt = f"""
             Topic: {title}
-            Papers this week: {count}
+            Papers this week: {paper_count}
 
             Key entities:
             - Chemicals: {chem}
@@ -76,7 +72,5 @@ def summarize_all_topics(topic_papers_tags):
             "tags": topic_item["tags"],
             "summary": response.text
         }
-
-        count +=1
 
     return topic_summaries
