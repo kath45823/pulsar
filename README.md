@@ -2,7 +2,7 @@
 
 **P**ubMed **U**nsupervised **L**iterature **S**ummary **A**nd **R**eview
 
-Pulsar is an automated scientific literature digest that fetches the latest PubMed papers, clusters them into research topics using unsupervised ML, extracts biomedical entities via NER, and delivers a weekly HTML email summary — powered by BERTopic, BioBERT, weak supervision stance detection, and LLM summarization.
+Pulsar is an automated scientific literature digest that fetches the latest PubMed papers, clusters them into research topics using unsupervised ML, extracts biomedical entities via NER, and delivers a weekly HTML email summary — powered by BERTopic, BioBERT, and LLM summarization.
 
 ---
 
